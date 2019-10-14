@@ -15,15 +15,19 @@ public interface FoodDao {
     void InsertFood(Food food);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void InsertFoods(Food... foods);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void InsertFoodList(List<Food> foods);
+
 
     @Delete
     void DeleteFood(Food food);
 
-    @Query("SELECT * FROM Food WHERE id = :id")
+    @Query("SELECT * FROM foods WHERE id = :id")
     Food SelectById(int id);
 
-    @Query("SELECT * FROM Food")
+    @Query("select * from foods")
     List<Food> SelectAllFoods();
 
 }

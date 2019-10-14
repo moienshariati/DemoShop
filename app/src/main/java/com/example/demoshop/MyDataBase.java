@@ -23,9 +23,9 @@ public abstract class MyDataBase extends RoomDatabase {
         return Room.databaseBuilder(
                 context,
                 MyDataBase.class,
-                DB_NAME).build();
+                DB_NAME).allowMainThreadQueries().build();
     }
 
-    public abstract FoodDao getFooDao();
+    public abstract FoodDao getFoodDao();
 
 }
