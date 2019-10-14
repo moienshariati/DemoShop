@@ -1,2 +1,2 @@
 ## DemoShop
-#### it is not recommended to store an image into database.
+#### it is not recommended to store any image into database.
