@@ -1,17 +1,15 @@
 package com.example.demoshop;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-
+import androidx.annotation.InspectableProperty;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "foods")
 public class Food {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     public int id;
 
 
@@ -22,7 +20,7 @@ public class Food {
         this.description = description;
         this.thumbnail = thumbnail;
     }
-
+    @Ignore
     public Food() {
     }
 
@@ -31,7 +29,7 @@ public class Food {
 
     @ColumnInfo(name = "foodPrice")
     public int foodPrice;
-    @ColumnInfo(name = "description")
+    @ColumnInfo(name = "tvDescription")
     public String description;
 
     @ColumnInfo(name = "thumbnail",typeAffinity = ColumnInfo.BLOB)

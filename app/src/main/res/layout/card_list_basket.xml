@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/root_frame"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_frame_basket"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -43,64 +43,56 @@
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
             android:padding="10dp">
-            <Button
-                android:id="@+id/btn_min_to_card"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="45dp"
-
-                android:background="@drawable/ic_min_circle_black_24dp" />
-
-            <Button
-                android:id="@+id/btn_add_to_card"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="5dp"
-
-                android:background="@drawable/ic_add_circle_black_24dp" />
 
             <ImageView
-                android:id="@+id/thumbnail"
+                android:id="@+id/tv_basket_thumbnail"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
                 android:layout_marginRight="10dp"
                 android:scaleType="center" />
 
             <TextView
-                android:id="@+id/description"
+                android:gravity="center"
+                android:id="@+id/tv_basket_counter"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/shape_bg_card_voal"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:id="@+id/tv_basket_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/name"
+                android:layout_below="@+id/tv_basket_name"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@id/thumbnail"
+                android:layout_toRightOf="@id/tv_basket_thumbnail"
                 android:fontFamily="sans-serif"
                 android:textColor="@color/description"
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/price"
+                android:id="@+id/tv_basket_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/description"
                 android:layout_alignParentBottom="true"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@id/thumbnail"
+                android:layout_toRightOf="@id/tv_basket_thumbnail"
                 android:textColor="@color/colorAccent"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/tv_basket_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/thumbnail"
+                android:layout_toRightOf="@id/tv_basket_thumbnail"
                 android:ellipsize="end"
                 android:fontFamily="sans-serif"
                 android:maxLines="1"
+
                 android:textColor="@color/itemName"
                 android:textSize="17sp" />
         </RelativeLayout>

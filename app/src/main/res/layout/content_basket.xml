@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:id="@+id/rl_content_basket"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+
+    >
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_basket"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+
+
+        >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+<!--    <RelativeLayout-->
+<!--        android:gravity="center_vertical"-->
+<!--        android:background="@color/colorPrimary"-->
+<!--        android:id="@+id/rl_into_rl"-->
+<!--      -->
+<!--      android:layout_alignParentBottom="true"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="60dp"-->
+
+<!--        >-->
+<!--        <TextView-->
+<!--            android:paddingLeft="70dp"-->
+<!--            android:text="TotalPrice"-->
+<!--            android:textAllCaps="false"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"/>-->
+
+<!--        <TextView-->
+<!--            android:paddingRight="70dp"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:text="200"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"/>-->
+
+<!--    </RelativeLayout>-->
+
+
+
+
+</RelativeLayout>

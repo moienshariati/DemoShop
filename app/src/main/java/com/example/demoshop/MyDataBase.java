@@ -5,7 +5,7 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-@Database(entities = {Food.class},version = 1)
+@Database(entities = {Food.class,Basket.class},version = 1,exportSchema = false)
 public abstract class MyDataBase extends RoomDatabase {
 
     private static final String DB_NAME="shopDatabase.db";
@@ -27,5 +27,6 @@ public abstract class MyDataBase extends RoomDatabase {
     }
 
     public abstract FoodDao getFoodDao();
+    public abstract BasketDao getBasketDao();
 
 }
