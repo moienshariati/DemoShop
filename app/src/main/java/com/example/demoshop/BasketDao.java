@@ -27,6 +27,9 @@ public interface BasketDao {
     @Delete
     void deleteBasket(Basket basket);
 
+    @Delete
+    void deletListBasket(List<Basket> baskets);
+
     @Query("DELETE FROM baskets Where id= :id")
     void  DeleteByID(int id);
 
@@ -41,6 +44,14 @@ public interface BasketDao {
 //    Basket SelectAllId(int id);
 
     @Query("SELECT * FROM baskets WHERE foodCounter")
+    // khoroji az jens Basket ast
     Basket SelectFoodCounter();
+
+    @Query("SELECT SUM(foodCounter) FROM baskets")
+    int getTotalCount ();
+
+    @Query("SELECT SUM(price * foodCounter) FROM baskets")
+    int getTotalPrice();
+
 
 }

@@ -58,7 +58,6 @@ public class FoodRecyclerView extends RecyclerView.Adapter<FoodRecyclerView.MyVi
         holder.tvDescription.setText(food.getDescription());
         holder.tvPrice.setText(Integer.toString(food.getFoodPrice()));
 
-
         byte[] foodimages = food.getImage();
         Bitmap bitmap = BitmapFactory.decodeByteArray(foodimages, 0, foodimages.length);
         holder.thumbnail.setImageBitmap(bitmap);
@@ -97,23 +96,15 @@ public class FoodRecyclerView extends RecyclerView.Adapter<FoodRecyclerView.MyVi
                     if (position != RecyclerView.NO_POSITION) {
                         counter = counter + 1;
 
+                        Food selectedFoodPosition = foodList.get(position);
 
-                        MyDataBase db = MyDataBase.getInstance(context);
+                        FoodOrderingBussiness bussiness = new FoodOrderingBussiness(context);
+
+                        bussiness.addToBasket(selectedFoodPosition);
 
 
-                        Food selectedFood = foodList.get(position);
-                        Basket foundRecord = db.getBasketDao().SelectById(selectedFood.getId());
-                        if (foundRecord == null) {
-                            Basket newItem = new Basket(selectedFood.getId(), selectedFood.getFoodNames(),
-                                    selectedFood.getFoodPrice(), selectedFood.getDescription());
-
-                            db.getBasketDao().InsertBasket(newItem);
-
-                        } else {
-                            foundRecord.foodCounter++;
-                            db.getBasketDao().UpdateBasket(foundRecord);
-                        }
-                        Toast.makeText(v.getContext(), "Added db", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), "Added db , total = " + bussiness.getTotalCount() +
+                                "Total Price = " + bussiness.getTotalPrice(), Toast.LENGTH_SHORT).show();
 
 //                        Basket basket1=new Basket(1,1,"ghaza",1,140);
 //                        db.getBasketDao().InsertBasket(basket1);
@@ -148,20 +139,18 @@ public class FoodRecyclerView extends RecyclerView.Adapter<FoodRecyclerView.MyVi
                     if (position != RecyclerView.NO_POSITION) {
 
                         counter -= 1;
-                        MyDataBase db = MyDataBase.getInstance(context);
 
+                        FoodOrderingBussiness bussiness=new FoodOrderingBussiness(context);
 
-                        Basket foundRecord = db.getBasketDao().SelectById(foodList.get(position).getId());
-                       if(foundRecord == null)
-                       {
-                           Toast.makeText(v.getContext(), "there is no item", Toast.LENGTH_SHORT).show();
-                       }
-                        else if (foundRecord.foodCounter <= 1) {
-                            db.getBasketDao().DeleteByID(foundRecord.id);
-                        } else {
-                            foundRecord.foodCounter--;
-                            db.getBasketDao().UpdateBasket(foundRecord);
+                        int removedCount = bussiness.removeItemFromBasket(foodList.get(position).getId());
+
+                        if (removedCount == 0) {
+                            Toast.makeText(v.getContext(), "there is no item", Toast.LENGTH_SHORT).show();
+                        }else{
+
+                            Toast.makeText(v.getContext(), "succsessfully removed", Toast.LENGTH_SHORT).show();
                         }
+
                         final Snackbar snackbar = Snackbar.make(rootFrameLayout, "food counter = " + counter, Snackbar.LENGTH_INDEFINITE)
 
                                 .setAction("CardShop", new View.OnClickListener() {

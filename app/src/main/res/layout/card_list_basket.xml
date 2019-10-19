@@ -60,7 +60,30 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/shape_bg_card_voal"
-                android:textColor="@color/colorWhite" />
+                android:textColor="@color/colorWhite"
+                android:layout_marginRight="30dp"
+                />
+            <Button
+                android:id="@+id/btn_min_to_cardbasket"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="60dp"
+
+
+                android:background="@drawable/ic_min_circle_black_24dp" />
+
+            <Button
+                android:id="@+id/btn_add_to_cardbasket"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="5dp"
+
+                android:background="@drawable/ic_add_circle_black_24dp" />
 
             <TextView
                 android:id="@+id/tv_basket_description"
