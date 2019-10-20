@@ -1,12 +1,13 @@
 package com.example.demoshop;
 
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +50,10 @@ public class BasketRecyclerView extends RecyclerView.Adapter<BasketRecyclerView.
         holder.tvDescription.setText(basket.getDescription());
         holder.tvPrice.setText(Integer.toString(basket.getPrice()));
         holder.tvBasketCounter.setText(Integer.toString(basket.getFoodCounter()));
+        byte[] foodimages = basket.getThumbnail();
+        Bitmap bitmap = BitmapFactory.decodeByteArray(foodimages, 0, foodimages.length);
+        holder.ivthumbnail.setImageBitmap(bitmap);
+   
 
     }
 
@@ -58,17 +63,20 @@ public class BasketRecyclerView extends RecyclerView.Adapter<BasketRecyclerView.
     }
 
     public class MyBasketHolder extends RecyclerView.ViewHolder {
-        TextView tvName, tvDescription, tvPrice, tvBasketCounter;
+        TextView tvName, tvDescription, tvPrice, tvBasketCounter,tvTotalPriceBasket;
         Button btnIncrease, btnDecrease;
+        ImageView ivthumbnail;
 
         public MyBasketHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_basket_name);
             tvDescription = itemView.findViewById(R.id.tv_basket_description);
             tvPrice = itemView.findViewById(R.id.tv_basket_price);
+            ivthumbnail=itemView.findViewById(R.id.iv_basket_thumbnail);
             tvBasketCounter = itemView.findViewById(R.id.tv_basket_counter);
             btnIncrease = itemView.findViewById(R.id.btn_add_to_cardbasket);
             btnDecrease = itemView.findViewById(R.id.btn_min_to_cardbasket);
+            tvTotalPriceBasket = itemView.findViewById(R.id.tv_total_price_basket);
 
 
             btnIncrease.setOnClickListener(new View.OnClickListener() {
@@ -78,16 +86,19 @@ public class BasketRecyclerView extends RecyclerView.Adapter<BasketRecyclerView.
                     final int position = getAdapterPosition();
                     // check if item still exists
                     if (position != RecyclerView.NO_POSITION) {
-                        Food foodSelected = foodList.get(position);
-                        Basket basketSelected = basketList.get(position);
+//                        Food foodSelected = foodList.get(position);
+                        Basket basketSelected=basketList.get(position);
 
                         FoodOrderingBussiness bussiness = new FoodOrderingBussiness(context);
 
-                        bussiness.addToBasket(foodSelected);
-//                        db.getBasketDao().SelectById(selectedFood.getId());
+                        bussiness.addToBasketFactor(basketSelected);
+//                        db.getBasketDao().SelectById(basketSelected.getId());
                         MyDataBase db = MyDataBase.getInstance(context);
                         basketList = db.getBasketDao().SelectAllBaskets();
+//                        tvTotalPriceBasket.setText(Integer.toString(bussiness.getTotalPrice()));
                         setData(basketList);
+
+
                     }
 
 
@@ -130,5 +141,4 @@ public class BasketRecyclerView extends RecyclerView.Adapter<BasketRecyclerView.
         this.basketList = basketData;
         notifyDataSetChanged();
     }
-
 }

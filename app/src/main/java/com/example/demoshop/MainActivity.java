@@ -4,29 +4,40 @@ package com.example.demoshop;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
+
+import com.steelkiwi.library.view.BadgeHolderLayout;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     ConstraintLayout rootLayout;
-    public int count = 0;
     public Toolbar toolbar;
     Food food1, food2, food3, food4, food5, food6, food7, food8;
+    private BadgeHolderLayout badgeHolderLayout;
 
+
+    @Override
+    protected void onResume() {
+        FoodOrderingBussiness bussiness=new FoodOrderingBussiness(MainActivity.this);
+        badgeHolderLayout.setCountWithAnimation(bussiness.getTotalCount());
+        badgeHolderLayout.increment();
+        Toast.makeText(this, "onResume just called", Toast.LENGTH_SHORT).show();
+        super.onResume();
+    }
 
     @SuppressLint("WrongThread")
     @Override
@@ -36,12 +47,13 @@ public class MainActivity extends AppCompatActivity {
 
         rootLayout = findViewById(R.id.root_layout);
         toolbar = findViewById(R.id.toolbar);
-
+        badgeHolderLayout = findViewById(R.id.badge_view);
         setSupportActionBar(toolbar);
 
 
-        MyDataBase db = MyDataBase.getInstance(MainActivity.this);
-
+        final MyDataBase db = MyDataBase.getInstance(MainActivity.this);
+        final FoodOrderingBussiness bussiness=new FoodOrderingBussiness(MainActivity.this);
+        badgeHolderLayout.setCount(bussiness.getTotalCount());
         addStaticData();
 
         db.getFoodDao().InsertFoods(food1, food2, food3, food4, food5, food6, food7, food8);
@@ -57,6 +69,40 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new FoodRecyclerView(foods, rootLayout, MainActivity.this);
         recyclerView.setAdapter(adapter);
+
+
+
+
+
+
+
+        adapter.onchangeBadge(new FoodRecyclerView.badgeListener() {
+            @Override
+            public void onlistenerBadge(View view) {
+
+//                TotalBadgeCount(MainActivity.this);
+//                int totalBadgeCount = db.getBasketDao().getTotalCount();
+//                totalBadgeCount+=1;
+                badgeHolderLayout.setCountWithAnimation(bussiness.getTotalCount()+1);
+
+                badgeHolderLayout.increment();
+            }
+
+            @Override
+            public void onListenerRemoveBadge(View view) {
+
+                badgeHolderLayout.setCountWithAnimation(bussiness.getTotalCount()-1);
+
+                badgeHolderLayout.decrement();
+            }
+        });
+        badgeHolderLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,BasketActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
 //        String info = "";
@@ -133,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
         food8 = new Food(8, "Full Tandoori", 430, "Chicken roated with lip smacking mayo dressing", bytes8);
 
     }
+
 
 
 }

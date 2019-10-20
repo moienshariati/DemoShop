@@ -25,21 +25,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:padding="12dp"
-                android:src="@drawable/ic_shopping_cart_black_24dp" />
+            <com.steelkiwi.library.view.BadgeHolderLayout
+                android:id="@+id/badge_view"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                app:bhl_default_badge_background="@color/colorAccent"
+                app:bhl_text_color="@android:color/white"
+                app:bhl_text_size="12sp"
+                app:bhl_badge_radius="10dp">
 
-            <TextView
-                android:padding="2dp"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:background="@color/colorWhite"
-                android:textColor="@color/bgRowBackground"
-                android:layout_marginLeft="24dp"
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_shopping_cart_black_24dp"
+                    app:srcCompat="@drawable/test_drawable"/>
+            </com.steelkiwi.library.view.BadgeHolderLayout>
 
-                />
         </FrameLayout>
 
 

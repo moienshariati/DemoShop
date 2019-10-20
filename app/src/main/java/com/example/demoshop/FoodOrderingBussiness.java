@@ -15,7 +15,21 @@ public class FoodOrderingBussiness {
         Basket foundRecord = db.getBasketDao().SelectById(selectedFoodPosition.getId());
         if (foundRecord == null) {
             Basket newItem = new Basket(selectedFoodPosition.getId(), selectedFoodPosition.getFoodNames(),
-                    selectedFoodPosition.getFoodPrice(), selectedFoodPosition.getDescription());
+                    selectedFoodPosition.getFoodPrice(), selectedFoodPosition.getDescription(),selectedFoodPosition.getImage());
+
+            db.getBasketDao().InsertBasket(newItem);
+
+        } else {
+            foundRecord.foodCounter++;
+            db.getBasketDao().UpdateBasket(foundRecord);
+        }
+
+    }
+    public void addToBasketFactor(Basket selectedBasketPosition) {
+        Basket foundRecord = db.getBasketDao().SelectById(selectedBasketPosition.getId());
+        if (foundRecord == null) {
+            Basket newItem = new Basket(selectedBasketPosition.getId(), selectedBasketPosition.getFoodName(),
+                    selectedBasketPosition.getPrice(), selectedBasketPosition.getDescription(),selectedBasketPosition.getThumbnail());
 
             db.getBasketDao().InsertBasket(newItem);
 
@@ -32,7 +46,6 @@ public class FoodOrderingBussiness {
 
         if (foundRecord == null) {
             return 0;
-
             //Toast.makeText(v.getContext(), "there is no item", Toast.LENGTH_SHORT).show();
 
         } else if (foundRecord.foodCounter <= 1) {

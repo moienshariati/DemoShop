@@ -26,6 +26,9 @@ public class Basket {
     @ColumnInfo(name = "description")
     public String description;
 
+    @ColumnInfo(name = "thumbnail",typeAffinity = ColumnInfo.BLOB)
+    public byte[] thumbnail;
+
     @Ignore
     public Basket(int id, int foodId, String foodName, int foodCounter, int price, String description) {
         this.id = id;
@@ -37,16 +40,25 @@ public class Basket {
 
     }
 
-    public Basket(int id,String foodName, int price, String description) {
+    public Basket(int id,String foodName, int price, String description,byte[] thumbnail) {
         this.foodName = foodName;
         this.price = price;
         this.description = description;
         this.id=id;
+        this.thumbnail=thumbnail;
         foodCounter=1;
 
     }
     @Ignore
     public Basket() {
+    }
+
+    public byte[] getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(byte[] thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     public int getId() {

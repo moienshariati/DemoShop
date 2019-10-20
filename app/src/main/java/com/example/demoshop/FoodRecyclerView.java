@@ -27,10 +27,15 @@ import java.util.List;
 
 
 public class FoodRecyclerView extends RecyclerView.Adapter<FoodRecyclerView.MyViewHolder> {
+
+
     public TextView tvCardCounter;
     ConstraintLayout rootLayout;
     int counter = 0;
-    int arcounter = 0;
+
+
+
+    private badgeListener listener;
 
     private Context context;
     private List<Food> foodList = new ArrayList<>();
@@ -52,7 +57,7 @@ public class FoodRecyclerView extends RecyclerView.Adapter<FoodRecyclerView.MyVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
         Food food = foodList.get(position);
         holder.tvName.setText(food.getFoodNames());
         holder.tvDescription.setText(food.getDescription());
@@ -61,6 +66,15 @@ public class FoodRecyclerView extends RecyclerView.Adapter<FoodRecyclerView.MyVi
         byte[] foodimages = food.getImage();
         Bitmap bitmap = BitmapFactory.decodeByteArray(foodimages, 0, foodimages.length);
         holder.thumbnail.setImageBitmap(bitmap);
+
+//        holder.btnAddToCard.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(listener !=null){
+//                    listener.onlistenerBadge(holder.btnAddToCard);
+//                }
+//            }
+//        });
 
     }
 
@@ -95,7 +109,9 @@ public class FoodRecyclerView extends RecyclerView.Adapter<FoodRecyclerView.MyVi
                     // check if item still exists
                     if (position != RecyclerView.NO_POSITION) {
                         counter = counter + 1;
-
+                        if(listener !=null) {
+                            listener.onlistenerBadge(btnAddToCard);
+                        }
                         Food selectedFoodPosition = foodList.get(position);
 
                         FoodOrderingBussiness bussiness = new FoodOrderingBussiness(context);
@@ -106,13 +122,11 @@ public class FoodRecyclerView extends RecyclerView.Adapter<FoodRecyclerView.MyVi
                         Toast.makeText(v.getContext(), "Added db , total = " + bussiness.getTotalCount() +
                                 "Total Price = " + bussiness.getTotalPrice(), Toast.LENGTH_SHORT).show();
 
-//                        Basket basket1=new Basket(1,1,"ghaza",1,140);
-//                        db.getBasketDao().InsertBasket(basket1);
 
 
-                        final Snackbar snackbar = Snackbar.make(rootFrameLayout, "food counter = " + counter, Snackbar.LENGTH_INDEFINITE)
+                        final Snackbar snackbar = Snackbar.make(rootFrameLayout, "تعداد کالا = " +bussiness.getTotalCount(), Snackbar.LENGTH_SHORT)
 
-                                .setAction("CardShop", new View.OnClickListener() {
+                                .setAction("سبد خرید", new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
                                         Intent intent = new Intent(context, BasketActivity.class);
@@ -138,6 +152,10 @@ public class FoodRecyclerView extends RecyclerView.Adapter<FoodRecyclerView.MyVi
                     // check if item still exists
                     if (position != RecyclerView.NO_POSITION) {
 
+                        if (listener !=null){
+                            listener.onListenerRemoveBadge(btnMinToCard);
+                        }
+
                         counter -= 1;
 
                         FoodOrderingBussiness bussiness=new FoodOrderingBussiness(context);
@@ -151,7 +169,7 @@ public class FoodRecyclerView extends RecyclerView.Adapter<FoodRecyclerView.MyVi
                             Toast.makeText(v.getContext(), "succsessfully removed", Toast.LENGTH_SHORT).show();
                         }
 
-                        final Snackbar snackbar = Snackbar.make(rootFrameLayout, "food counter = " + counter, Snackbar.LENGTH_INDEFINITE)
+                        final Snackbar snackbar = Snackbar.make(rootFrameLayout, "food counter = " + counter, Snackbar.LENGTH_SHORT)
 
                                 .setAction("CardShop", new View.OnClickListener() {
                                     @Override
@@ -173,6 +191,21 @@ public class FoodRecyclerView extends RecyclerView.Adapter<FoodRecyclerView.MyVi
 
         }
     }
+
+
+    public interface badgeListener {
+        void onlistenerBadge(View view);//func ke view migire v dar inja holder.btn ro gerefte
+
+        void onListenerRemoveBadge(View view);//func ke view migire v dar inja holder.btn ro gerefte
+    }
+
+    public void onchangeBadge(badgeListener listener) {
+        this.listener = listener;
+        //func ke listener be badgelistener eshare mikone va mitonim har ja khastim estefade konim
+    }
+
+    //To OnBindViewHolder
+
 
 
 }
