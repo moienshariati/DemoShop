@@ -11,17 +11,20 @@ public class FoodOrderingBussiness {
 
     }
 
-    public void addToBasket(Food selectedFoodPosition) {
+    public int addToBasket(Food selectedFoodPosition) {
         Basket foundRecord = db.getBasketDao().SelectById(selectedFoodPosition.getId());
         if (foundRecord == null) {
             Basket newItem = new Basket(selectedFoodPosition.getId(), selectedFoodPosition.getFoodNames(),
                     selectedFoodPosition.getFoodPrice(), selectedFoodPosition.getDescription(),selectedFoodPosition.getImage());
 
             db.getBasketDao().InsertBasket(newItem);
+            return newItem.foodCounter;
 
         } else {
             foundRecord.foodCounter++;
             db.getBasketDao().UpdateBasket(foundRecord);
+
+            return foundRecord.foodCounter;
         }
 
     }
@@ -50,11 +53,11 @@ public class FoodOrderingBussiness {
 
         } else if (foundRecord.foodCounter <= 1) {
             db.getBasketDao().DeleteByID(foundRecord.id);
-            return 1;
+            return 0;
         } else {
             foundRecord.foodCounter--;
             db.getBasketDao().UpdateBasket(foundRecord);
-            return 1;
+            return foundRecord.foodCounter;
         }
     }
 

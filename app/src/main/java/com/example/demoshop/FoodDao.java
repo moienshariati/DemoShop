@@ -1,5 +1,6 @@
 package com.example.demoshop;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -27,7 +28,13 @@ public interface FoodDao {
     @Query("SELECT * FROM foods WHERE id = :id")
     Food SelectById(int id);
 
+    @Query("SELECT foodCounter FROM baskets WHERE id = :id")
+    int getCountById(int id);
+
     @Query("select * from foods")
     List<Food> SelectAllFoods();
+
+    @Query("select * from foods")
+    LiveData<List<Food>> SelectAllFoodsLive();
 
 }

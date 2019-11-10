@@ -53,7 +53,7 @@ public class BasketRecyclerView extends RecyclerView.Adapter<BasketRecyclerView.
         byte[] foodimages = basket.getThumbnail();
         Bitmap bitmap = BitmapFactory.decodeByteArray(foodimages, 0, foodimages.length);
         holder.ivthumbnail.setImageBitmap(bitmap);
-   
+
 
     }
 
@@ -86,7 +86,7 @@ public class BasketRecyclerView extends RecyclerView.Adapter<BasketRecyclerView.
                     final int position = getAdapterPosition();
                     // check if item still exists
                     if (position != RecyclerView.NO_POSITION) {
-//                        Food foodSelected = foodList.get(position);
+//                        Food foodSelected = foodLists.get(position);
                         Basket basketSelected=basketList.get(position);
 
                         FoodOrderingBussiness bussiness = new FoodOrderingBussiness(context);
